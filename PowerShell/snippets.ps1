@@ -34,3 +34,6 @@ foreach ($s in "server1","server2"){
 
 # something like a pgrep (but with objects)
 ps | Where-Object ProcessName -Like "cn*"
+
+# create a resource group $ResGrp
+$ResGrp = New-AzureRmResourceGroup $resourceGroupName -location 'East US'
