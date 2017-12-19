@@ -11,9 +11,9 @@ Install-Module Pscx -Scope CurrentUser -AllowClobber
 ###
 # Language features
 $hashmap = @{key1=value1 ; key2=value2}
+$collection = @(Object, "String")
 $list = item1,item2,item3
 $hashmap += $appended_hashmap
-
 Foreach ($i in $collection){
 	Do-Something
 }
