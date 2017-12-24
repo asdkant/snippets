@@ -1,0 +1,12 @@
+#!/usr/bin/python2
+
+import sys, locale, bs4, unicodedata, re
+from bs4 import BeautifulSoup
+tag_type = sys.argv[1]
+tag_prop = sys.argv[2]
+prop_value = sys.argv[3]
+ch_file = sys.argv[4]
+raw_html = open(ch_file).read().decode(sys.stdin.encoding or locale.getpreferredencoding(True))
+html = BeautifulSoup(raw_html, "lxml")
+tag_content = html.find(tag_type,attrs={tag_prop:prop_value})
+print tag_content.encode_contents()
