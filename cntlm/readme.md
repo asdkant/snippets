@@ -47,7 +47,7 @@ You'll probably want to be able to run this without much issue, so here's the qu
 
 1. create a couple of links to cntlm.exe
 2. go to the properties of each one, and edit the "Target" value with these two respectively:
-  a. `"C:\Program Files (x86)\Cntlm\cntlm.exe" -c cntlm.ini`
-  b. `"C:\Program Files (x86)\Cntlm\cntlm.exe" -c cntlm.ini -f -v`
+  * `"C:\Program Files (x86)\Cntlm\cntlm.exe" -c cntlm.ini`
+  * `"C:\Program Files (x86)\Cntlm\cntlm.exe" -c cntlm.ini -f -v`
 
 The first one will be for the day-to-day use, the second one leaves the cmd window open so you can see what's going on.
