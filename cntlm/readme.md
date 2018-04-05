@@ -1,18 +1,18 @@
 # CNTLM and dealing with the corporate proxy
 
-CNTLM acts as an intermediary, showing an HTTP/HTTPS proxy that actually goes through the NTLM corporate proxy. Here's how to configure it as a localhost-only non-authenticated HTTP proxy. The "architecture" look something like this:
+CNTLM acts as an intermediary, offering an HTTP/HTTPS proxy that actually goes through the NTLM corporate proxy in the backend. Here's how to configure it as a localhost-only non-authenticated HTTP proxy. The "architecture" looks something like this:
 
 ````
 [application] <---> CNTLM <---> corporate proxy <---> the internet
 ````
 
-Why would you want to do this? Because not all apps know how to speak to a corporate proxy which authenticates via NTLM, or you are required to change your password too often and it's better to change it in one config than to change it into seven different configs.
+Why would you want to do this? Because not all apps know how to speak to a corporate proxy which authenticates via NTLM. Or perhaps you are required to change your password too often and it's better to do so for a single config than for seven different ones.
 
 Examples of applications that benefit from this are Anaconda (the Python distribution), the official Git client for windows, and microsoft's own Azure Storage Explorer.
 
 
 ## Step 1: download and install CNTLM
-You can grab it from [the official web page](http://cntlm.sourceforge.net) , the installation is pretty straightforward and shouldn't poste a problem
+You can grab it from [the official web page](http://cntlm.sourceforge.net) , the installation is pretty straightforward and shouldn't pose a problem.
 
 ## Step 2: configuration
 By default it'll be installed in `C:\Program Files (x86)\Cntlm`, go there and open `cntlm.ini`. You will need `Username`, `Domain` and at least one line with `Proxy` (you can have more than one). Remember to comment any line with `Password` or `Pass{something}` (see example below).
@@ -29,7 +29,7 @@ Proxy		proxy.megacorp.com:8443 # usual HTTP port
 Proxy		proxy.megacorp.com:8080 $ usual HTTP port
 ````
 
-Now open CMD or powershell and go to the installation folder, and run this:
+Now open CMD or powershell, go to the installation folder, and run this:
 ````
 cntlm -c cntlm.ini -M http://www.example.com
 ````
