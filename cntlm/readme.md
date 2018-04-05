@@ -34,13 +34,18 @@ Now open CMD or powershell and go to the installation folder, and run this:
 cntlm -c cntlm.ini -M http://www.example.com
 ````
 
-The program will ask for your password, once you provide it you will get among some fluff two lines like this:
+The program will ask for your password, once you provide it you will get something like this:
 ````
+C:\Program Files (x86)\Cntlm>cntlm -c cntlm.ini -M http://www.example.com
+Password:
+Config profile  1/4... OK (HTTP code: 200)
+----------------------------[ Profile  0 ]------
 Auth            NTLMv2
 PassNTLMv2      D5826E9C665C37C80B53397D5C07BBCB
+------------------------------------------------
 ````
 
-You just need to copy those lines in hte config file, and configuration is done.
+You just need to copy the lines between the `------` in the config file, and configuration is done.
 
 Ah, one last thing. You should have a line looking like this:
 ````
