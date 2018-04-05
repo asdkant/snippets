@@ -1,6 +1,14 @@
 # CNTLM and dealing with the corporate proxy
 
-CNTLM acts as an intermediary, showing an HTTP/HTTPS proxy that actually goes through the NTLM corporate proxy. Here's how to configure it as a localhost-only non-authenticated HTTP proxy.
+CNTLM acts as an intermediary, showing an HTTP/HTTPS proxy that actually goes through the NTLM corporate proxy. Here's how to configure it as a localhost-only non-authenticated HTTP proxy. The "architecture" look something like this:
+
+````
+[application] <---> CNTLM <---> corporate proxy <---> the internet
+````
+
+Why would you want to do this? Because not all apps know how to speak to a corporate proxy which authenticates via NTLM, or you are required to change your password too often and it's better to change it in one config than to change it into seven different configs.
+
+Examples of applications that benefit from this are Anaconda (the Python distribution), the official Git client for windows, and microsoft's own Azure Storage Explorer.
 
 
 ## Step 1: download and install CNTLM
