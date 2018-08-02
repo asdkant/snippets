@@ -1,0 +1,39 @@
+#!/usr/bin/python
+from OpenSSL import crypto
+import argparse
+
+############################################
+##                                        ##
+##   Prints relevant info of a .pfx file  ##
+##                                        ##
+############################################
+
+
+parser = argparse.ArgumentParser(description='Read a PFX file and print some info')
+parser.add_argument('pfxfile', type=str, nargs=1, help="PFX file")
+parser.add_argument(type=str, nargs=1, dest="password", help="PFX password")
+args = parser.parse_args()
+
+
+
+
+p12 = crypto.load_pkcs12(open(args.pfxfile[0],'rb').read(),args.password[0])
+cert = p12.get_certificate()
+
+nb = cert.get_notBefore().decode()
+na = cert.get_notAfter().decode()
+
+iss = [i.decode()+"="+j.decode() for (i,j) in cert.get_issuer().get_components()]
+iss_str = ""
+for i in iss:
+	iss_str += i+" "
+
+subj = [k.decode()+"="+v.decode() for (k,v) in cert.get_subject().get_components()]
+subj_str = ""
+for i in subj:
+	subj_str += i+" "
+
+print("NotBefore: " + nb[0:4] +"-"+ nb[4:6] +"-"+ nb[6:8])
+print("NotAfter:  " + na[0:4] +"-"+ na[4:6] +"-"+ na[6:8])
+print("Issuer:    " + iss_str[0:-1])
+print("Subject:   " + subj_str[0:-1])
