@@ -3,10 +3,19 @@
 from sys import stdin, argv
 from bs4 import BeautifulSoup
 
-if argv[1] == "-h":
-    help = """Usage:
-    tagextract {tag type} {tag property} {property value} {file}
-    """
+if "-h" in argv:
+    help = f"""\
+Returns the content of the tag you are looking for. Pass the HTML in a file 
+name or through standard input.
+
+Usage: tagextract TAG_TYPE PROPERTY_NAME PROPERTY_VALUE [FILE]
+
+For example, this:
+
+	tagextract div class post-text filename.html
+
+will search filename.html for a tag <div class="post-text"> and print the
+contents"""
     print(help)
 else:
     f = stdin if len(argv) < 5 else open(argv[4])
