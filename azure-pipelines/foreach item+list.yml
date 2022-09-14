@@ -1,0 +1,34 @@
+# this was used for a multi-region deployment where Dev has one region, and
+# staging/prod have two. "item" is mandatory, and we do stages looping over
+# the combined list of "item" followed by the items in "list"
+
+trigger: none
+pr: none
+
+pool:
+  vmImage: ubuntu-latest
+
+parameters:
+- name: item
+  default: first
+- name: list
+  type: object
+  default:
+    - second
+    - third
+
+variables:
+- name: joinedList
+  value: ${{join(';',parameters.list)}}
+- name: itemAndJoinedList
+  value: ${{parameters.item}};${{variables.joinedList}}
+
+stages:
+- ${{ each i in split(variables.itemAndJoinedList,';') }}:
+  - stage:
+    displayName: ${{i}}
+    jobs:
+    - job:
+      displayName: ${{i}}
+      steps:
+      - bash: echo "${{ i }}"
