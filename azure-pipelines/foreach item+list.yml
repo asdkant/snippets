@@ -17,18 +17,13 @@ parameters:
     - second
     - third
 
-variables:
-- name: joinedList
-  value: ${{join(';',parameters.list)}}
-- name: itemAndJoinedList
-  value: ${{parameters.item}};${{variables.joinedList}}
-
 stages:
-- ${{ each i in split(variables.itemAndJoinedList,';') }}:
-  - stage:
-    displayName: ${{i}}
-    jobs:
-    - job:
+- ${{ each i in split(format('{0};{1}', parameters.item, join(';',parameters.list) ), ';') }}:
+  - ${{ if ne(i,'') }}:
+    - stage:
       displayName: ${{i}}
-      steps:
-      - bash: echo "${{ i }}"
+      jobs:
+      - job:
+        displayName: ${{i}}
+        steps:
+        - bash: echo "${{ i }}"
