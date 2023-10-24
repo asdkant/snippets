@@ -36,7 +36,7 @@ services:
       - GF_LOG_LEVEL=warn
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
-      # - 'grafana_storage:/var/lib/grafana'
+      - 'grafana_storage:/var/lib/grafana'
   node-exporter:
     image: quay.io/prometheus/node-exporter:latest
     volumes:
