@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  cadvisor:
+    image: google/cadvisor:latest
+    restart: always
+    # descomentar para exponer cAdvisor
+    # ports:
+    #   - "8080:8080" # HOST_PORT:CONTAINER_PORT
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    # descomentar para exponer Prometheus
+    # ports:
+    #   - 9090:9090 # HOST_PORT:CONTAINER_PORT
+    restart: unless-stopped
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+      - GF_LOG_LEVEL=warn
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      # - 'grafana_storage:/var/lib/grafana'
+  node-exporter:
+    image: quay.io/prometheus/node-exporter:latest
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+      - /:/host:ro,rslave
+    command: 
+      - '--path.rootfs=/host'
+      - '--path.procfs=/host/proc' 
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    # descomentar para exponer node_exporter
+    # ports:
+    #   - 9100:9100
+    restart: always
+    deploy:
+      mode: global
+
+volumes:
+  prom_data:
+  grafana_storage: 
